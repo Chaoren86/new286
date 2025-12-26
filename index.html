@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title></title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        html, body {
+            height: 100%;
+            width: 100%;
+            overflow-x: hidden;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, "Microsoft YaHei", sans-serif;
+            background: white;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 0;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 100%;
+            background: white;
+            border-radius: 0;
+            box-shadow: none;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            max-height: 100vh;
+        }
+        
+        .header {
+            background: #2c3e50;
+            color: white;
+            padding: 15px 20px;
+            text-align: center;
+            flex-shrink: 0;
+        }
+        
+        .header h1 {
+            font-size: clamp(18px, 4vw, 24px);
+            margin-bottom: 5px;
+            word-break: break-word;
+        }
+        
+        .header p {
+            font-size: clamp(12px, 2.5vw, 14px);
+            opacity: 0.9;
+            word-break: break-all;
+        }
+        
+        .notice {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 5px;
+            padding: 10px 15px;
+            margin: 15px;
+            text-align: center;
+            font-size: clamp(12px, 2.5vw, 14px);
+            flex-shrink: 0;
+        }
+        
+        .iframe-wrapper {
+            position: relative;
+            flex: 1;
+            min-height: 0;
+            width: 100%;
+            overflow: hidden;
+        }
+        
+        .iframe-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            background: #f5f5f5;
+        }
+        
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            display: block;
+            background: white;
+        }
+        
+        .loading {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            z-index: 10;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 20px 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        
+        .loading-spinner {
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #667eea;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 15px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .loading-text {
+            font-size: 16px;
+            color: #666;
+            margin-bottom: 10px;
+        }
+        
+        .error-message {
+            color: #d32f2f;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+        
+        .error-link {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 10px 20px;
+            background: #667eea;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+        
+        .error-link:hover {
+            background: #5568d3;
+        }
+        
+        .mixed-content-warning {
+            background: #fff3cd;
+            border: 2px solid #ffc107;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px;
+            text-align: center;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .mixed-content-warning h3 {
+            color: #856404;
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+        
+        .mixed-content-warning p {
+            color: #856404;
+            margin-bottom: 15px;
+            line-height: 1.6;
+            font-size: 14px;
+        }
+        
+        .mixed-content-warning .solution {
+            background: white;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 15px;
+            text-align: left;
+        }
+        
+        .mixed-content-warning .solution strong {
+            display: block;
+            margin-bottom: 10px;
+            color: #333;
+        }
+        
+        .mixed-content-warning .solution ul {
+            margin: 10px 0;
+            padding-left: 20px;
+            color: #666;
+        }
+        
+        .mixed-content-warning .solution li {
+            margin: 5px 0;
+        }
+        
+        .footer {
+            text-align: center;
+            padding: 12px;
+            background: #f8f9fa;
+            border-top: 1px solid #eee;
+            color: #666;
+            font-size: clamp(11px, 2vw, 13px);
+            flex-shrink: 0;
+        }
+        
+        /* 移动端优化 */
+        @media (max-width: 768px) {
+            body {
+                padding: 0;
+            }
+            
+            .container {
+                border-radius: 0;
+                height: 100vh;
+            }
+            
+            .loading {
+                padding: 15px 20px;
+                width: 90%;
+                max-width: 300px;
+            }
+            
+            .mixed-content-warning {
+                margin: 15px;
+                padding: 15px;
+            }
+            
+            .mixed-content-warning h3 {
+                font-size: 16px;
+            }
+            
+            .mixed-content-warning p {
+                font-size: 13px;
+            }
+            
+            .mixed-content-warning .solution {
+                padding: 12px;
+                font-size: 12px;
+            }
+        }
+        
+        /* 超小屏幕优化 */
+        @media (max-width: 480px) {
+            .loading-text {
+                font-size: 14px;
+            }
+        }
+        
+        /* 横屏模式优化 */
+        @media (orientation: landscape) and (max-height: 500px) {
+            /* 横屏模式特定样式 */
+        }
+        
+        /* 隐藏加载动画 */
+        .loading.hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div id="mixedContentWarning" class="mixed-content-warning" style="display: none;">
+            <h3>⚠️ 混合内容安全限制</h3>
+            <p>由于浏览器安全策略，HTTPS 页面无法嵌入 HTTP 内容。</p>
+            <div class="solution">
+                <strong>解决方案：</strong>
+                <ul>
+                    <li>点击下方按钮在新窗口中打开网站（推荐）</li>
+                    <li>或者将页面部署到 HTTP 环境（非 GitHub Pages）</li>
+                    <li>或者为目标服务器配置 HTTPS 证书</li>
+                </ul>
+            </div>
+            <a href="https://xtdtkj.com" target="_blank" rel="noopener noreferrer" class="error-link" style="margin-top: 15px;">在新窗口中打开网站</a>
+        </div>
+        <div class="iframe-wrapper" id="iframeWrapper">
+            <div class="iframe-container">
+                <div class="loading" id="loading">
+                    <div class="loading-spinner"></div>
+                    <div class="loading-text">正在加载网站...</div>
+                </div>
+                <iframe 
+                    src="https://xtdtkj.com" 
+                    id="mainFrame"
+                    title="第三方网站内容"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen"
+                    allowfullscreen
+                    sandbox="allow-same-origin allow-scripts allow-forms allow-popups allow-popups-to-escape-sandbox allow-top-navigation-by-user-activation"
+                    referrerpolicy="no-referrer-when-downgrade"
+                    loading="eager">
+                    <p>您的浏览器不支持iframe。请<a href="https://xtdtkj.com" target="_blank" rel="noopener noreferrer">点击这里</a>在新窗口中打开。</p>
+                </iframe>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        (function() {
+            'use strict';
+            
+            const iframe = document.getElementById('mainFrame');
+            const loading = document.getElementById('loading');
+            const iframeWrapper = document.getElementById('iframeWrapper');
+            const mixedContentWarning = document.getElementById('mixedContentWarning');
+            let loadTimeout;
+            let hasLoaded = false;
+            let errorDetected = false;
+            let checkCount = 0;
+            const maxChecks = 20; // 最多检查20次（10秒）
+            
+            // 检测混合内容问题
+            function checkMixedContent() {
+                if (window.location.protocol === 'https:' && iframe && iframe.src.startsWith('http:')) {
+                    return true;
+                }
+                return false;
+            }
+            
+            // 显示混合内容警告
+            function showMixedContentWarning() {
+                if (mixedContentWarning) {
+                    mixedContentWarning.style.display = 'block';
+                }
+                if (iframeWrapper) {
+                    iframeWrapper.style.display = 'none';
+                }
+                if (loading) {
+                    loading.classList.add('hidden');
+                }
+                errorDetected = true;
+            }
+            
+            // 检测iframe是否成功加载
+            function checkIframeLoad() {
+                checkCount++;
+                try {
+                    // 尝试访问iframe内容（可能因跨域失败，这是正常的）
+                    const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+                    if (iframeDoc && iframeDoc.readyState === 'complete') {
+                        hideLoading();
+                        hasLoaded = true;
+                        return true;
+                    }
+                } catch (e) {
+                    // 跨域访问被阻止是正常的，不代表加载失败
+                    // 如果iframe已经加载了一段时间，认为加载成功
+                    if (!errorDetected && checkCount > 3) {
+                        // 延迟隐藏加载提示，给iframe更多时间
+                        setTimeout(hideLoading, 1000);
+                        return true;
+                    }
+                }
+                return false;
+            }
+            
+            // 隐藏加载提示
+            function hideLoading() {
+                if (loading && !hasLoaded) {
+                    loading.classList.add('hidden');
+                    hasLoaded = true;
+                    if (loadTimeout) {
+                        clearTimeout(loadTimeout);
+                    }
+                }
+            }
+            
+            // 显示错误信息
+            function showError(message, details) {
+                errorDetected = true;
+                if (loading) {
+                    let errorHTML = '<div class="error-message">' + message + '</div>';
+                    if (details) {
+                        errorHTML += '<div style="font-size: 12px; color: #999; margin-top: 10px;">' + details + '</div>';
+                    }
+                    errorHTML += '<a href="https://xtdtkj.com" target="_blank" rel="noopener noreferrer" class="error-link">点击这里在新窗口中打开</a>';
+                    loading.innerHTML = errorHTML;
+                    loading.classList.remove('hidden');
+                }
+            }
+            
+            // 测试URL是否可访问
+            function testUrlAccessibility() {
+                return new Promise(function(resolve) {
+                    const testImg = new Image();
+                    testImg.onload = function() {
+                        resolve(true);
+                    };
+                    testImg.onerror = function() {
+                        resolve(false);
+                    };
+                    // 尝试加载目标URL的favicon或根路径
+                    testImg.src = 'https://xtdtkj.com/favicon.ico?' + Date.now();
+                    setTimeout(function() {
+                        resolve(null); // 超时返回null
+                    }, 3000);
+                });
+            }
+            
+            // iframe加载事件处理
+            if (iframe) {
+                // 立即检查混合内容问题
+                const hasMixedContent = checkMixedContent();
+                if (hasMixedContent) {
+                    console.warn('检测到混合内容问题：HTTPS页面无法嵌入HTTP内容');
+                    // 立即显示警告，不等待iframe加载
+                    showMixedContentWarning();
+                    return; // 提前返回，不继续执行后续代码
+                }
+                
+                // 监听iframe加载完成
+                iframe.addEventListener('load', function() {
+                    console.log('iframe load 事件触发');
+                    // 延迟一点再隐藏，确保内容渲染完成
+                    setTimeout(function() {
+                        if (!errorDetected) {
+                            hideLoading();
+                        }
+                    }, 800);
+                });
+                
+                // 监听iframe加载错误
+                iframe.addEventListener('error', function(e) {
+                    console.error('iframe error 事件触发', e);
+                    // 再次检查是否是混合内容问题
+                    if (checkMixedContent()) {
+                        showMixedContentWarning();
+                        return;
+                    }
+                    
+                    let errorMsg = '加载失败，可能的原因：';
+                    let details = '';
+                    errorMsg += '<br>• 目标网站不允许嵌入（X-Frame-Options限制）';
+                    errorMsg += '<br>• 网络连接问题';
+                    errorMsg += '<br>• 服务器未响应';
+                    details += '提示：请检查目标URL是否可访问，或尝试在新窗口中打开。';
+                    
+                    showError(errorMsg, details);
+                });
+                
+                // 使用多种方式检测加载状态
+                let loadCheckInterval = setInterval(function() {
+                    // 如果检测到混合内容，停止检查
+                    if (checkMixedContent() && !errorDetected) {
+                        clearInterval(loadCheckInterval);
+                        showMixedContentWarning();
+                        return;
+                    }
+                    
+                    if (hasLoaded) {
+                        clearInterval(loadCheckInterval);
+                        return;
+                    }
+                    
+                    if (checkIframeLoad()) {
+                        clearInterval(loadCheckInterval);
+                    } else if (checkCount >= maxChecks) {
+                        clearInterval(loadCheckInterval);
+                        // 如果检查了足够多次还没成功，再次检查混合内容
+                        if (checkMixedContent()) {
+                            showMixedContentWarning();
+                            return;
+                        }
+                        // 尝试测试URL可访问性
+                        testUrlAccessibility().then(function(accessible) {
+                            if (accessible === false) {
+                                showError('无法连接到目标服务器。', '请检查网络连接或URL是否正确。');
+                            } else if (!hasLoaded) {
+                                // 即使无法确定，也隐藏加载提示，让用户看到iframe
+                                hideLoading();
+                            }
+                        });
+                    }
+                }, 500);
+                
+                // 备用检测：如果8秒后还没加载完成，隐藏加载提示
+                loadTimeout = setTimeout(function() {
+                    if (!hasLoaded && !errorDetected) {
+                        console.log('超时隐藏加载提示');
+                        hideLoading();
+                    }
+                }, 8000);
+                
+                // 15秒后停止所有检查
+                setTimeout(function() {
+                    clearInterval(loadCheckInterval);
+                    if (loadTimeout) {
+                        clearTimeout(loadTimeout);
+                    }
+                }, 15000);
+            }
+            
+            // 处理页面可见性变化
+            document.addEventListener('visibilitychange', function() {
+                if (!document.hidden && iframe && !hasLoaded && !errorDetected) {
+                    checkIframeLoad();
+                }
+            });
+            
+            // 处理窗口大小变化，确保iframe正确显示
+            let resizeTimer;
+            window.addEventListener('resize', function() {
+                clearTimeout(resizeTimer);
+                resizeTimer = setTimeout(function() {
+                    if (iframe) {
+                        // 触发iframe重新计算尺寸
+                        iframe.style.height = iframe.offsetHeight + 'px';
+                        setTimeout(function() {
+                            iframe.style.height = '100%';
+                        }, 10);
+                    }
+                }, 250);
+            });
+            
+            // 检测是否支持iframe
+            if (!iframe) {
+                showError('浏览器不支持iframe功能。');
+            }
+            
+            // 添加控制台调试信息
+            console.log('iframe 初始化完成，源URL:', iframe ? iframe.src : 'N/A');
+            console.log('当前页面协议:', window.location.protocol);
+            console.log('iframe协议:', iframe && iframe.src ? new URL(iframe.src).protocol : 'N/A');
+        })();
+    </script>
+</body>
+</html>
