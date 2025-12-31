@@ -4,6 +4,82 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- 微信和移动端优化 -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-touch-fullscreen" content="yes">
+    <meta name="format-detection" content="telephone=no, email=no, address=no">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="screen-orientation" content="portrait">
+    <meta name="x5-orientation" content="portrait">
+    <meta name="x5-fullscreen" content="true">
+    <meta name="x5-page-mode" content="app">
+    <meta name="full-screen" content="yes">
+    <meta name="browsermode" content="application">
+    <!-- 安卓微信浮窗支持 -->
+    <meta name="applicable-device" content="mobile">
+    <meta name="HandheldFriendly" content="true">
+    <meta name="MobileOptimized" content="320">
+    <meta name="msapplication-TileColor" content="#667eea">
+    <meta name="theme-color" content="#667eea">
+    <!-- 防止微信识别为文件下载 - 多重声明 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="Content-Type" content="text/html">
+    <meta name="renderer" content="webkit">
+    <meta name="force-rendering" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <!-- 微信特定优化，防止被识别为文件 -->
+    <meta name="referrer" content="never">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <!-- 明确告诉微信这是网页，不是文件 - 多重声明 -->
+    <meta name="content-type" content="text/html">
+    <meta name="content-type" content="text/html; charset=UTF-8">
+    <meta name="media-type" content="text/html">
+    <meta name="document-type" content="html">
+    <meta name="mime-type" content="text/html">
+    <meta name="file-type" content="html">
+    <!-- 微信浏览器特定标识 -->
+    <meta name="x5-cache" content="false">
+    <meta name="x5-page-mode" content="app">
+    <meta name="x5-orientation" content="portrait">
+    <!-- 额外声明，确保微信识别为网页 -->
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-itunes-app" content="app-id=">
+    <meta name="apple-mobile-web-app-title" content="">
+    <!-- 微信分享优化 -->
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="">
+    <meta property="og:description" content="">
+    <meta property="og:image" content="">
+    <meta property="og:url" content="">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="">
+    <meta name="twitter:description" content="">
+    <meta name="twitter:image" content="">
+    <!-- 禁止所有搜索引擎和爬虫抓取 -->
+    <meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex, nocache">
+    <meta name="googlebot" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
+    <meta name="bingbot" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
+    <meta name="slurp" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
+    <meta name="duckduckbot" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
+    <meta name="baiduspider" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
+    <meta name="yisouSpider" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
+    <meta name="Sogou" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
+    <meta name="360Spider" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
+    <meta name="Bytespider" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
+    <!-- 禁止QQ和微信爬虫 -->
+    <meta name="QQBot" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
+    <meta name="TencentTraveler" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
+    <meta name="WeChat" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
+    <meta name="MicroMessenger" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
+    <!-- 禁止其他常见爬虫 -->
+    <meta name="spider" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
+    <meta name="crawler" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
+    <meta name="bot" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
     <title></title>
     <style>
         * {
@@ -16,17 +92,23 @@
             height: 100%;
             width: 100%;
             overflow-x: hidden;
+            overflow-y: hidden;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
         }
         
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, "Microsoft YaHei", sans-serif;
             background: white;
-            min-height: 100vh;
+            margin: 0;
+            padding: 0;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            padding: 0;
         }
         
         .container {
@@ -35,11 +117,14 @@
             background: white;
             border-radius: 0;
             box-shadow: none;
-            overflow: hidden;
             display: flex;
             flex-direction: column;
             height: 100vh;
+            height: 100dvh; /* 动态视口高度，考虑移动端浏览器工具栏 */
             max-height: 100vh;
+            max-height: 100dvh;
+            position: relative;
+            overflow: hidden;
         }
         
         .header {
@@ -78,22 +163,32 @@
             flex: 1;
             min-height: 0;
             width: 100%;
-            overflow: hidden;
+            height: 100%;
+            overflow: visible;
+            display: flex;
+            flex-direction: column;
         }
         
         .iframe-container {
             position: relative;
             width: 100%;
             height: 100%;
+            flex: 1;
+            min-height: 0;
             background: #f5f5f5;
+            overflow: visible;
         }
         
         iframe {
             width: 100%;
             height: 100%;
+            min-height: 100%;
             border: none;
             display: block;
             background: white;
+            overflow: visible;
+            /* 确保 iframe 内容可以完整显示 */
+            -webkit-overflow-scrolling: touch;
         }
         
         .loading {
@@ -212,6 +307,11 @@
         
         /* 移动端优化 */
         @media (max-width: 768px) {
+            html, body {
+                height: 100vh;
+                height: 100dvh;
+            }
+            
             body {
                 padding: 0;
             }
@@ -219,6 +319,22 @@
             .container {
                 border-radius: 0;
                 height: 100vh;
+                height: 100dvh;
+                max-height: 100vh;
+                max-height: 100dvh;
+            }
+            
+            .iframe-wrapper {
+                height: 100%;
+            }
+            
+            .iframe-container {
+                height: 100%;
+            }
+            
+            iframe {
+                height: 100%;
+                min-height: 100%;
             }
             
             .loading {
@@ -246,6 +362,28 @@
             }
         }
         
+        /* Safari 特定优化 */
+        @supports (-webkit-touch-callout: none) {
+            html, body {
+                height: -webkit-fill-available;
+            }
+            
+            .container {
+                min-height: -webkit-fill-available;
+            }
+            
+            .iframe-wrapper {
+                min-height: -webkit-fill-available;
+            }
+        }
+        
+        /* Chrome 特定优化 */
+        @media screen and (min-width: 769px) {
+            .container {
+                height: 100vh;
+            }
+        }
+        
         /* 超小屏幕优化 */
         @media (max-width: 480px) {
             .loading-text {
@@ -262,9 +400,480 @@
         .loading.hidden {
             display: none;
         }
+        
+        /* 安全检测页面 */
+        .security-check {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease-out, visibility 0.5s ease-out;
+        }
+        
+        .security-check.hidden {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+            display: none !important;
+        }
+        
+        .security-check-content {
+            background: white;
+            border-radius: 20px;
+            padding: 40px 50px;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            max-width: 500px;
+            width: 90%;
+            animation: fadeInUp 0.6s ease-out;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .security-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            color: white;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+                box-shadow: 0 0 0 0 rgba(102, 126, 234, 0.7);
+            }
+            50% {
+                transform: scale(1.05);
+                box-shadow: 0 0 0 10px rgba(102, 126, 234, 0);
+            }
+        }
+        
+        .security-check-content h2 {
+            font-size: 24px;
+            color: #333;
+            margin-bottom: 10px;
+            font-weight: 600;
+            transition: all 0.5s ease-out;
+        }
+        
+        .security-check-content .subtitle {
+            font-size: 18px;
+            color: #667eea;
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+        
+        .security-check-content p {
+            font-size: 16px;
+            color: #666;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+        
+        .security-check-content .hint {
+            font-size: 14px;
+            color: #999;
+            margin-top: 20px;
+            font-style: italic;
+        }
+        
+        /* 检测步骤 */
+        .check-steps {
+            margin: 30px 0;
+            text-align: left;
+        }
+        
+        .check-step {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            opacity: 0;
+            transform: translateX(-20px);
+            transition: all 0.5s ease-out;
+        }
+        
+        .check-step.active {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        
+        .check-step.completed {
+            opacity: 0.6;
+        }
+        
+        .step-icon {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: #e0e0e0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 12px;
+            flex-shrink: 0;
+            font-size: 12px;
+            transition: all 0.3s;
+        }
+        
+        .check-step.active .step-icon {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            animation: stepPulse 1s infinite;
+        }
+        
+        .check-step.completed .step-icon {
+            background: #4caf50;
+            color: white;
+        }
+        
+        .check-step.completed .step-icon::before {
+            content: '✓';
+        }
+        
+        @keyframes stepPulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.1);
+            }
+        }
+        
+        .step-text {
+            font-size: 15px;
+            color: #666;
+            flex: 1;
+        }
+        
+        .check-step.active .step-text {
+            color: #333;
+            font-weight: 500;
+        }
+        
+        .check-step.completed .step-text {
+            color: #999;
+        }
+        
+        /* 进度条 */
+        .progress-bar {
+            width: 100%;
+            height: 4px;
+            background: #e0e0e0;
+            border-radius: 2px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            width: 0%;
+            transition: width 0.5s ease-out;
+            border-radius: 2px;
+        }
+        
+        /* 检测完成状态 */
+        .security-check-content.check-complete .check-steps {
+            max-height: 0;
+            opacity: 0;
+            margin: 0;
+            overflow: hidden;
+            transition: all 0.5s ease-out;
+        }
+        
+        .security-check-content.check-complete .progress-bar {
+            opacity: 0;
+            height: 0;
+            margin: 0;
+            transition: all 0.5s ease-out;
+        }
+        
+        .security-check-content.check-complete .security-icon {
+            background: #4caf50;
+            animation: successPulse 0.6s ease-out;
+            width: 100px;
+            height: 100px;
+            font-size: 50px;
+        }
+        
+        @keyframes successPulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.15);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+        
+        .security-check-content.check-complete h2 {
+            font-size: 28px;
+            margin-bottom: 15px;
+            color: #4caf50;
+        }
+        
+        .security-check-content.check-complete .subtitle {
+            font-size: 16px;
+            color: #666;
+            margin-bottom: 40px;
+        }
+        
+        .security-check-btn {
+            opacity: 0;
+            transform: translateY(20px) scale(0.95);
+            transition: all 0.5s ease-out;
+            pointer-events: none;
+        }
+        
+        .security-check-content.check-complete .security-check-btn {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+            pointer-events: auto;
+            padding: 20px 60px;
+            font-size: 20px;
+        }
+        
+        .check-complete-message {
+            font-size: 15px;
+            color: #4caf50;
+            margin-bottom: 25px;
+            font-weight: 500;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.5s ease-out 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        
+        .check-complete-message::before {
+            content: '✓';
+            display: inline-block;
+            width: 24px;
+            height: 24px;
+            background: #4caf50;
+            color: white;
+            border-radius: 50%;
+            line-height: 24px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+        
+        .security-check-content.check-complete .check-complete-message {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* 简化后的布局 */
+        .security-check-content.check-complete {
+            padding: 50px 40px;
+        }
+        
+        .security-check-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 18px 50px;
+            font-size: 18px;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+            font-weight: 600;
+            position: relative;
+            overflow: hidden;
+            animation: buttonPulse 2s infinite;
+        }
+        
+        .security-check-btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+        
+        .security-check-btn:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+        
+        .security-check-btn:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.6);
+        }
+        
+        .security-check-btn:active {
+            transform: translateY(-1px) scale(1.02);
+        }
+        
+        @keyframes buttonPulse {
+            0%, 100% {
+                box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+            }
+            50% {
+                box-shadow: 0 6px 25px rgba(102, 126, 234, 0.6);
+            }
+        }
+        
+        .security-check-btn span {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .security-check-content .arrow-hint {
+            display: inline-block;
+            margin-left: 8px;
+            animation: arrowBounce 1.5s infinite;
+        }
+        
+        @keyframes arrowBounce {
+            0%, 100% {
+                transform: translateX(0);
+            }
+            50% {
+                transform: translateX(5px);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .security-check-content {
+                padding: 30px 25px;
+            }
+            
+            .security-check-content.check-complete {
+                padding: 40px 25px;
+            }
+            
+            .security-icon {
+                width: 60px;
+                height: 60px;
+                font-size: 30px;
+                margin-bottom: 15px;
+            }
+            
+            .security-check-content.check-complete .security-icon {
+                width: 80px;
+                height: 80px;
+                font-size: 40px;
+            }
+            
+            .security-check-content h2 {
+                font-size: 20px;
+                margin-bottom: 12px;
+            }
+            
+            .security-check-content.check-complete h2 {
+                font-size: 22px;
+                margin-bottom: 15px;
+            }
+            
+            .security-check-content p {
+                font-size: 14px;
+                margin-bottom: 25px;
+            }
+            
+            .security-check-content.check-complete .subtitle {
+                font-size: 15px;
+                margin-bottom: 35px;
+            }
+            
+            .security-check-btn {
+                padding: 12px 30px;
+                font-size: 16px;
+            }
+            
+            .security-check-content.check-complete .security-check-btn {
+                padding: 16px 40px;
+                font-size: 18px;
+            }
+            
+            .check-complete-message {
+                font-size: 14px;
+                margin-bottom: 20px;
+            }
+        }
     </style>
 </head>
 <body>
+    <!-- 立即输出可见内容，确保微信识别为HTML页面而不是文件 -->
+    <!-- 微信需要立即看到HTML内容才能正确识别 -->
+    <div style="display:none;" id="wechat-html-marker">HTML</div>
+    <!-- JavaScript检测提示（通过JavaScript控制显示） -->
+    <div id="jsWarning" style="position:fixed;top:0;left:0;width:100%;height:100%;background:#f5f5f5;display:none;align-items:center;justify-content:center;z-index:99999;">
+        <div style="text-align:center;padding:40px;background:white;border-radius:10px;box-shadow:0 2px 10px rgba(0,0,0,0.1);">
+            <h2 style="color:#d32f2f;margin-bottom:20px;">需要启用JavaScript</h2>
+            <p style="color:#666;line-height:1.6;">本页面需要JavaScript支持才能正常访问。</p>
+            <p style="color:#999;font-size:14px;margin-top:20px;">请启用浏览器的JavaScript功能后刷新页面。</p>
+        </div>
+    </div>
+    <!-- 安全检测页面 -->
+    <div id="securityCheck" class="security-check">
+        <div class="security-check-content" id="securityCheckContent">
+            <div class="security-icon">🔒</div>
+            <h2>安全检测中</h2>
+            <div class="subtitle" id="checkSubtitle">正在验证访问环境...</div>
+            
+            <div class="check-steps">
+                <div class="check-step" id="step1">
+                    <div class="step-icon">1</div>
+                    <div class="step-text">检测浏览器环境</div>
+                </div>
+                <div class="check-step" id="step2">
+                    <div class="step-icon">2</div>
+                    <div class="step-text">验证安全连接</div>
+                </div>
+                <div class="check-step" id="step3">
+                    <div class="step-icon">3</div>
+                    <div class="step-text">检查访问权限</div>
+                </div>
+                <div class="check-step" id="step4">
+                    <div class="step-icon">4</div>
+                    <div class="step-text">完成安全验证</div>
+                </div>
+            </div>
+            
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+            
+            <button class="security-check-btn" id="securityCheckBtn">
+                <span>点击进入 <span class="arrow-hint">→</span></span>
+            </button>
+        </div>
+    </div>
+    
     <div class="container">
         <div id="mixedContentWarning" class="mixed-content-warning" style="display: none;">
             <h3>⚠️ 混合内容安全限制</h3>
@@ -277,7 +886,7 @@
                     <li>或者为目标服务器配置 HTTPS 证书</li>
                 </ul>
             </div>
-            <a href="https://xinlssc04.cn" target="_blank" rel="noopener noreferrer" class="error-link" style="margin-top: 15px;">在新窗口中打开网站</a>
+            <a href="https://47.86.109.240:1188" target="_blank" rel="noopener noreferrer" class="error-link" id="mixedContentLink" style="margin-top: 15px;">在新窗口中打开网站</a>
         </div>
         <div class="iframe-wrapper" id="iframeWrapper">
             <div class="iframe-container">
@@ -286,15 +895,16 @@
                     <div class="loading-text">正在加载网站...</div>
                 </div>
                 <iframe 
-                    src="https://xinlssc04.cn" 
                     id="mainFrame"
                     title="第三方网站内容"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen"
                     allowfullscreen
-                    sandbox="allow-same-origin allow-scripts allow-forms allow-popups allow-popups-to-escape-sandbox allow-top-navigation-by-user-activation"
+                    sandbox="allow-same-origin allow-scripts allow-forms allow-popups allow-popups-to-escape-sandbox allow-top-navigation-by-user-activation allow-modals"
                     referrerpolicy="no-referrer-when-downgrade"
-                    loading="eager">
-                    <p>您的浏览器不支持iframe。请<a href="https://xinlssc04.cn" target="_blank" rel="noopener noreferrer">点击这里</a>在新窗口中打开。</p>
+                    loading="eager"
+                    scrolling="yes"
+                    style="overflow: auto; -webkit-overflow-scrolling: touch;">
+                    <p>您的浏览器不支持iframe。请<a href="https://47.86.109.240:1188" target="_blank" rel="noopener noreferrer" id="fallbackLink">点击这里</a>在新窗口中打开。</p>
                 </iframe>
             </div>
         </div>
@@ -304,28 +914,316 @@
         (function() {
             'use strict';
             
+            // 检测微信环境
+            const isWeChat = /micromessenger/i.test(navigator.userAgent);
+            const isQQ = /mqqbrowser|qzone|qqbrowser/i.test(navigator.userAgent);
+            
+            // 微信/QQ环境特殊处理：立即渲染页面内容，防止被识别为文件
+            if (isWeChat || isQQ) {
+                // 强制立即显示body内容
+                if (document.body) {
+                    document.body.style.visibility = 'visible';
+                    document.body.style.display = 'block';
+                    document.body.style.opacity = '1';
+                }
+                // 确保HTML元素可见
+                if (document.documentElement) {
+                    document.documentElement.style.visibility = 'visible';
+                    document.documentElement.style.display = 'block';
+                }
+                // 立即触发重绘和回流，确保微信识别为HTML
+                if (document.body) {
+                    // 强制触发重绘
+                    const forceRepaint = document.body.offsetHeight;
+                    // 确保有内容高度
+                    if (document.body.offsetHeight === 0) {
+                        document.body.style.minHeight = '1px';
+                        setTimeout(function() {
+                            if (document.body) {
+                                document.body.style.minHeight = '';
+                            }
+                        }, 0);
+                    }
+                }
+                // 确保安全检测页面立即可见
+                const securityCheck = document.getElementById('securityCheck');
+                if (securityCheck) {
+                    securityCheck.style.display = 'flex';
+                    securityCheck.style.visibility = 'visible';
+                    securityCheck.style.opacity = '1';
+                }
+                // 强制触发一次重绘
+                if (window.requestAnimationFrame) {
+                    requestAnimationFrame(function() {
+                        if (document.body) {
+                            document.body.style.display = document.body.style.display || 'block';
+                        }
+                    });
+                }
+            }
+            
+            // 立即隐藏JavaScript警告（如果JavaScript能运行，说明已启用）
+            (function() {
+                const jsWarning = document.getElementById('jsWarning');
+                if (jsWarning) {
+                    jsWarning.style.display = 'none';
+                }
+            })();
+            
+            // 反爬虫检测 - 检测User-Agent
+            function detectCrawler() {
+                const userAgent = navigator.userAgent || '';
+                const ua = userAgent.toLowerCase();
+                
+                // 允许的正常浏览器User-Agent关键词（这些不应该被阻止）
+                const allowedBrowsers = [
+                    'micromessenger',  // 微信内置浏览器
+                    'wechat',          // 微信浏览器
+                    'qqbrowser',       // QQ浏览器
+                    'mqqbrowser',      // 移动QQ浏览器
+                    'tencenttraveler'  // 腾讯浏览器
+                ];
+                
+                // 检查是否是正常的浏览器（包含允许的关键词）
+                let isAllowedBrowser = false;
+                for (let i = 0; i < allowedBrowsers.length; i++) {
+                    if (ua.indexOf(allowedBrowsers[i]) !== -1) {
+                        isAllowedBrowser = true;
+                        break;
+                    }
+                }
+                
+                // 如果是正常浏览器，直接允许访问
+                if (isAllowedBrowser) {
+                    return false;
+                }
+                
+                // 明确的爬虫关键词列表（只检测真正的爬虫）
+                const crawlerKeywords = [
+                    // 搜索引擎爬虫（明确的bot标识）
+                    'googlebot',
+                    'bingbot',
+                    'slurp',
+                    'duckduckbot',
+                    'baiduspider',
+                    'yisouspider',
+                    'sogou web spider',
+                    'sogou inst spider',
+                    '360spider',
+                    'bytespider',
+                    'yandexbot',
+                    'facebookexternalhit',
+                    'facebookbot',
+                    'twitterbot',
+                    'linkedinbot',
+                    'telegrambot',
+                    // 明确的爬虫标识（必须包含bot/spider/crawler等）
+                    'spider',
+                    'crawler',
+                    'bot',
+                    'scraper',
+                    'spiderbot',
+                    'crawlbot',
+                    // 自动化工具和爬虫框架
+                    'python-requests',
+                    'scrapy',
+                    'headless',
+                    'phantom',
+                    'selenium',
+                    'puppeteer',
+                    'playwright',
+                    'cheerio',
+                    // HTTP客户端（可能是爬虫）
+                    'wget',
+                    'curl',
+                    'java/',
+                    'go-http-client',
+                    'httpclient',
+                    'apache-httpclient',
+                    'okhttp',
+                    'node-fetch',
+                    'axios'
+                ];
+                
+                // 检测是否为明确的爬虫（必须包含明确的爬虫关键词）
+                for (let i = 0; i < crawlerKeywords.length; i++) {
+                    if (ua.indexOf(crawlerKeywords[i]) !== -1) {
+                        // 对于bot/spider/crawler这些通用词，需要更严格的判断
+                        if (crawlerKeywords[i] === 'bot' || crawlerKeywords[i] === 'spider' || crawlerKeywords[i] === 'crawler') {
+                            // 检查是否真的是爬虫（User-Agent中明确包含bot/spider/crawler，且不是正常浏览器）
+                            // 正常浏览器的User-Agent通常包含chrome/safari/firefox等
+                            const hasBrowserMarker = ua.indexOf('chrome') !== -1 || 
+                                                    ua.indexOf('safari') !== -1 || 
+                                                    ua.indexOf('firefox') !== -1 ||
+                                                    ua.indexOf('edge') !== -1 ||
+                                                    ua.indexOf('opera') !== -1;
+                            // 如果包含bot/spider/crawler但没有正常浏览器标识，判定为爬虫
+                            if (!hasBrowserMarker) {
+                                return true;
+                            }
+                        } else {
+                            // 其他明确的爬虫关键词（如googlebot、selenium等），直接判定为爬虫
+                            return true;
+                        }
+                    }
+                }
+                
+                // 检测自动化工具特征（webdriver是selenium等自动化工具的标志）
+                // 但允许正常的Chrome浏览器（即使打开开发者工具）
+                if (navigator.webdriver) {
+                    // 如果同时满足多个可疑条件，才判定为爬虫
+                    // 单独webdriver属性可能是开发者工具，不直接阻止
+                    const suspiciousCount = 0;
+                    // 检查是否真的是自动化工具（结合其他特征）
+                    if (!window.chrome || !navigator.plugins || navigator.plugins.length === 0) {
+                        return true;
+                    }
+                }
+                
+                // 检测屏幕尺寸异常（无头浏览器通常有固定尺寸）
+                // 但允许正常的浏览器（即使窗口很小）
+                if (window.screen && window.screen.width > 0 && window.screen.height > 0) {
+                    // 屏幕尺寸正常，继续检测
+                } else if (window.screen && (window.screen.width === 0 || window.screen.height === 0)) {
+                    // 屏幕尺寸为0，结合其他特征判断
+                    if (navigator.webdriver || ua.indexOf('headless') !== -1) {
+                        return true;
+                    }
+                }
+                
+                // 检测语言设置异常（真正的浏览器应该有语言设置）
+                if (!navigator.language && !navigator.languages) {
+                    // 结合其他特征判断
+                    if (navigator.webdriver || ua.indexOf('headless') !== -1) {
+                        return true;
+                    }
+                }
+                
+                // 检测时区异常（真正的浏览器应该有时区）
+                try {
+                    const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+                    if (!timezone) {
+                        // 结合其他特征判断
+                        if (navigator.webdriver || ua.indexOf('headless') !== -1) {
+                            return true;
+                        }
+                    }
+                } catch (e) {
+                    // 时区检测失败，不直接判定为爬虫
+                }
+                
+                return false;
+            }
+            
+            // 如果检测到爬虫，阻止访问
+            if (detectCrawler()) {
+                // 清空页面内容
+                document.body.innerHTML = '';
+                document.body.style.cssText = 'margin:0;padding:0;background:#f5f5f5;display:flex;align-items:center;justify-content:center;height:100vh;font-family:Arial,sans-serif;';
+                document.body.innerHTML = '<div style="text-align:center;padding:40px;background:white;border-radius:10px;box-shadow:0 2px 10px rgba(0,0,0,0.1);"><h2 style="color:#d32f2f;margin-bottom:20px;">访问被拒绝</h2><p style="color:#666;line-height:1.6;">抱歉，本页面不允许自动化工具访问。</p><p style="color:#999;font-size:14px;margin-top:20px;">请使用正常的浏览器访问。</p></div>';
+                // 阻止后续脚本执行
+                throw new Error('Crawler detected');
+            }
+            
+            // 获取DOM元素
             const iframe = document.getElementById('mainFrame');
             const loading = document.getElementById('loading');
             const iframeWrapper = document.getElementById('iframeWrapper');
             const mixedContentWarning = document.getElementById('mixedContentWarning');
+            const securityCheck = document.getElementById('securityCheck');
+            const securityCheckBtn = document.getElementById('securityCheckBtn');
+            
+            // 变量初始化
             let loadTimeout;
             let hasLoaded = false;
             let errorDetected = false;
             let checkCount = 0;
             const maxChecks = 20; // 最多检查20次（10秒）
             
+            // iframe基础URL
+            const iframeBaseUrl = 'https://47.86.109.240:1188';
+            
+            // 获取当前页面的hash参数
+            function getCurrentHash() {
+                const hash = window.location.hash;
+                return hash && hash.length > 1 ? hash : '';
+            }
+            
+            // 获取当前页面的查询参数（转换为hash格式）
+            function getQueryParam() {
+                const search = window.location.search;
+                if (search) {
+                    const params = new URLSearchParams(search);
+                    const agentCode = params.get('agent_code');
+                    if (agentCode) {
+                        // 转换为hash格式
+                        return '#/?agent_code=' + agentCode;
+                    }
+                }
+                return '';
+            }
+            
+            // 构建完整的iframe URL
+            function buildIframeUrl() {
+                // 优先使用查询参数（已转换为hash格式）
+                const queryParam = getQueryParam();
+                if (queryParam) {
+                    return iframeBaseUrl + '/' + queryParam;
+                }
+                
+                // 如果没有查询参数，使用hash参数
+                const hash = getCurrentHash();
+                if (hash) {
+                    return iframeBaseUrl + '/' + hash;
+                }
+                
+                return iframeBaseUrl;
+            }
+            
+            // 更新iframe的src和所有相关链接
+            function updateIframeUrl() {
+                const newUrl = buildIframeUrl();
+                if (iframe) {
+                    if (iframe.src !== newUrl) {
+                        iframe.src = newUrl;
+                        hasLoaded = false; // 重置加载状态
+                        if (loading) {
+                            loading.classList.remove('hidden');
+                        }
+                    } else {
+                        // 即使URL相同，也确保参数存在
+                        const param = getQueryParam() || getCurrentHash();
+                        if (param && !iframe.src.includes(param)) {
+                            iframe.src = newUrl;
+                        }
+                    }
+                }
+                
+                // 更新所有错误链接中的URL
+                const errorLinks = document.querySelectorAll('.error-link, iframe a');
+                errorLinks.forEach(function(link) {
+                    if (link.href && link.href.includes(iframeBaseUrl)) {
+                        const param = getQueryParam() || getCurrentHash();
+                        link.href = iframeBaseUrl + param;
+                    }
+                });
+            }
+            
             // 检测混合内容问题
             function checkMixedContent() {
-                if (window.location.protocol === 'https:' && iframe && iframe.src.startsWith('http:')) {
-                    return true;
-                }
-                return false;
+                return window.location.protocol === 'https:' && iframe && iframe.src.startsWith('http:');
             }
             
             // 显示混合内容警告
             function showMixedContentWarning() {
                 if (mixedContentWarning) {
                     mixedContentWarning.style.display = 'block';
+                    // 更新警告中的链接URL
+                    const mixedContentLink = document.getElementById('mixedContentLink');
+                    if (mixedContentLink) {
+                        const param = getQueryParam() || getCurrentHash();
+                        mixedContentLink.href = iframeBaseUrl + param;
+                    }
                 }
                 if (iframeWrapper) {
                     iframeWrapper.style.display = 'none';
@@ -378,7 +1276,9 @@
                     if (details) {
                         errorHTML += '<div style="font-size: 12px; color: #999; margin-top: 10px;">' + details + '</div>';
                     }
-                    errorHTML += '<a href="https://xinlssc04.cn" target="_blank" rel="noopener noreferrer" class="error-link">点击这里在新窗口中打开</a>';
+                    const param = getQueryParam() || getCurrentHash();
+                    const errorUrl = iframeBaseUrl + param;
+                    errorHTML += '<a href="' + errorUrl + '" target="_blank" rel="noopener noreferrer" class="error-link">点击这里在新窗口中打开</a>';
                     loading.innerHTML = errorHTML;
                     loading.classList.remove('hidden');
                 }
@@ -395,7 +1295,7 @@
                         resolve(false);
                     };
                     // 尝试加载目标URL的favicon或根路径
-                    testImg.src = 'https://xinlssc04.cn/favicon.ico?' + Date.now();
+                    testImg.src = 'https://47.86.109.240:1188/favicon.ico?' + Date.now();
                     setTimeout(function() {
                         resolve(null); // 超时返回null
                     }, 3000);
@@ -404,6 +1304,29 @@
             
             // iframe加载事件处理
             if (iframe) {
+                // 立即设置iframe的src（在页面加载的最早时机）
+                updateIframeUrl();
+                
+                // 如果DOM还在加载，也监听DOMContentLoaded确保更新
+                if (document.readyState === 'loading') {
+                    document.addEventListener('DOMContentLoaded', function() {
+                        updateIframeUrl();
+                    });
+                }
+                
+                // 监听hash变化，自动更新iframe URL
+                window.addEventListener('hashchange', function() {
+                    updateIframeUrl();
+                });
+                
+                // 页面完全加载后再次检查（确保参数被应用）
+                window.addEventListener('load', function() {
+                    const param = getQueryParam() || getCurrentHash();
+                    if (param && iframe && !iframe.src.includes(param)) {
+                        updateIframeUrl();
+                    }
+                });
+                
                 // 立即检查混合内容问题
                 const hasMixedContent = checkMixedContent();
                 if (hasMixedContent) {
@@ -416,12 +1339,19 @@
                 // 监听iframe加载完成
                 iframe.addEventListener('load', function() {
                     console.log('iframe load 事件触发');
+                    // 更新高度，确保内容完整显示
+                    updateIframeHeight();
                     // 延迟一点再隐藏，确保内容渲染完成
                     setTimeout(function() {
                         if (!errorDetected) {
                             hideLoading();
+                            // 再次更新高度，确保底部导航栏可见
+                            updateIframeHeight();
                         }
                     }, 800);
+                    // 延迟更新高度，等待内容完全渲染
+                    setTimeout(updateIframeHeight, 1500);
+                    setTimeout(updateIframeHeight, 3000);
                 });
                 
                 // 监听iframe加载错误
@@ -502,30 +1432,411 @@
                 }
             });
             
+            // 计算实际可用高度（考虑移动端浏览器工具栏）
+            function getAvailableHeight() {
+                // 优先使用动态视口高度（考虑移动端浏览器工具栏）
+                if (window.visualViewport && window.visualViewport.height) {
+                    return window.visualViewport.height;
+                }
+                // 使用标准视口高度
+                const height = window.innerHeight || document.documentElement.clientHeight;
+                return height;
+            }
+            
+            // 更新iframe高度
+            function updateIframeHeight() {
+                if (iframe && iframeWrapper) {
+                    const availableHeight = getAvailableHeight();
+                    // 确保iframe使用完整的可用高度
+                    iframeWrapper.style.height = availableHeight + 'px';
+                    iframe.style.height = '100%';
+                    iframe.style.minHeight = availableHeight + 'px';
+                    // 确保滚动相关样式不被覆盖
+                    iframe.style.overflow = 'auto';
+                    iframe.style.webkitOverflowScrolling = 'touch';
+                    // 确保容器也使用正确的高度
+                    const container = document.querySelector('.container');
+                    if (container) {
+                        container.style.height = availableHeight + 'px';
+                        container.style.maxHeight = availableHeight + 'px';
+                    }
+                }
+            }
+            
             // 处理窗口大小变化，确保iframe正确显示
             let resizeTimer;
             window.addEventListener('resize', function() {
                 clearTimeout(resizeTimer);
                 resizeTimer = setTimeout(function() {
-                    if (iframe) {
-                        // 触发iframe重新计算尺寸
-                        iframe.style.height = iframe.offsetHeight + 'px';
-                        setTimeout(function() {
-                            iframe.style.height = '100%';
-                        }, 10);
-                    }
-                }, 250);
+                    updateIframeHeight();
+                }, 100);
             });
+            
+            // 监听视觉视口变化（移动端浏览器工具栏显示/隐藏时）
+            if (window.visualViewport) {
+                window.visualViewport.addEventListener('resize', function() {
+                    updateIframeHeight();
+                });
+                window.visualViewport.addEventListener('scroll', function() {
+                    updateIframeHeight();
+                });
+            }
+            
+            // 页面加载完成后更新高度
+            window.addEventListener('load', function() {
+                updateIframeHeight();
+                // 延迟再次更新，确保浏览器工具栏已完全显示/隐藏
+                setTimeout(updateIframeHeight, 300);
+                setTimeout(updateIframeHeight, 1000);
+            });
+            
+            // 初始高度设置
+            updateIframeHeight();
             
             // 检测是否支持iframe
             if (!iframe) {
-                showError('浏览器不支持iframe功能。');
+                showError('浏览器不支持这个功能。');
             }
             
-            // 添加控制台调试信息
-            console.log('iframe 初始化完成，源URL:', iframe ? iframe.src : 'N/A');
-            console.log('当前页面协议:', window.location.protocol);
-            console.log('iframe协议:', iframe && iframe.src ? new URL(iframe.src).protocol : 'N/A');
+            // 更新fallback链接
+            const fallbackLink = document.getElementById('fallbackLink');
+            if (fallbackLink) {
+                const param = getQueryParam() || getCurrentHash();
+                fallbackLink.href = iframeBaseUrl + param;
+            }
+            
+            // 安全检测动画
+            function startSecurityCheck() {
+                const securityCheckContent = document.getElementById('securityCheckContent');
+                const checkSubtitle = document.getElementById('checkSubtitle');
+                const progressFill = document.getElementById('progressFill');
+                
+                // 确保必要的DOM元素存在
+                if (!securityCheckContent) {
+                    console.warn('安全检测内容元素未找到，延迟重试');
+                    setTimeout(startSecurityCheck, 200);
+                    return;
+                }
+                
+                // 检测是否为iOS设备
+                const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || 
+                             (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+                
+                // iOS设备使用更短的延迟时间
+                const baseDelay = isIOS ? 200 : 300;
+                const steps = [
+                    { id: 'step1', text: '检测浏览器环境', delay: baseDelay },
+                    { id: 'step2', text: '验证安全连接', delay: baseDelay * 2 },
+                    { id: 'step3', text: '检查访问权限', delay: baseDelay * 3 },
+                    { id: 'step4', text: '完成安全验证', delay: baseDelay * 4 }
+                ];
+                
+                let currentStep = 0;
+                let isCompleted = false;
+                let stepTimeouts = []; // 存储所有setTimeout的ID，用于清理
+                let startTime = Date.now(); // 记录开始时间
+                
+                // 强制完成函数（超时保护）
+                function forceComplete() {
+                    if (isCompleted) return;
+                    isCompleted = true;
+                    
+                    // 清理所有未执行的setTimeout
+                    stepTimeouts.forEach(function(timeoutId) {
+                        if (timeoutId) clearTimeout(timeoutId);
+                    });
+                    stepTimeouts = [];
+                    
+                    // 标记所有步骤为完成
+                    steps.forEach(function(s) {
+                        try {
+                            const el = document.getElementById(s.id);
+                            if (el) {
+                                el.classList.remove('active');
+                                el.classList.add('completed');
+                            }
+                        } catch (e) {
+                            // 忽略错误
+                        }
+                    });
+                    
+                    // 更新图标和标题
+                    try {
+                        const securityIcon = document.querySelector('.security-icon');
+                        if (securityIcon) {
+                            securityIcon.textContent = '✓';
+                        }
+                    } catch (e) {
+                        // 忽略错误
+                    }
+                    
+                    // 更新主标题
+                    try {
+                        const mainTitle = securityCheckContent.querySelector('h2');
+                        if (mainTitle) {
+                            mainTitle.textContent = '安全验证';
+                            mainTitle.style.opacity = '1';
+                            mainTitle.style.transform = 'translateY(0)';
+                        }
+                    } catch (e) {
+                        // 忽略错误
+                    }
+                    
+                    try {
+                        if (checkSubtitle) {
+                            checkSubtitle.style.display = 'none';
+                        }
+                    } catch (e) {
+                        // 忽略错误
+                    }
+                    
+                    // 显示完成消息和按钮
+                    try {
+                        if (securityCheckContent) {
+                            securityCheckContent.classList.add('check-complete');
+                        }
+                    } catch (e) {
+                        // 忽略错误
+                    }
+                    
+                    // 确保进度条100%
+                    try {
+                        if (progressFill) {
+                            progressFill.style.width = '100%';
+                        }
+                    } catch (e) {
+                        // 忽略错误
+                    }
+                }
+                
+                // 设置总超时保护（iOS设备2.5秒，其他设备3秒后强制完成）
+                const totalTimeoutDuration = isIOS ? 2500 : 3000;
+                const totalTimeout = setTimeout(function() {
+                    forceComplete();
+                }, totalTimeoutDuration);
+                stepTimeouts.push(totalTimeout);
+                
+                // 添加额外的安全检查：如果2秒后还没完成，强制完成
+                const quickTimeout = setTimeout(function() {
+                    if (!isCompleted && currentStep < steps.length - 1) {
+                        // 如果还在前面的步骤，直接跳到完成
+                        currentStep = steps.length;
+                        forceComplete();
+                    }
+                }, 2000);
+                stepTimeouts.push(quickTimeout);
+                
+                function showNextStep() {
+                    if (isCompleted) return;
+                    
+                    // 检查是否超时（如果超过3秒还没完成，直接完成）
+                    const elapsed = Date.now() - startTime;
+                    if (elapsed > 3000) {
+                        forceComplete();
+                        return;
+                    }
+                    
+                    if (currentStep < steps.length) {
+                        const step = steps[currentStep];
+                        
+                        // 更新UI（即使元素不存在也继续）
+                        try {
+                            const stepElement = document.getElementById(step.id);
+                            if (stepElement) {
+                                stepElement.classList.add('active');
+                            }
+                        } catch (e) {
+                            // 忽略错误
+                        }
+                        
+                        // 更新进度条
+                        try {
+                            const progress = ((currentStep + 1) / steps.length) * 100;
+                            if (progressFill) {
+                                progressFill.style.width = progress + '%';
+                            }
+                        } catch (e) {
+                            // 忽略错误
+                        }
+                        
+                        // 更新副标题
+                        try {
+                            if (checkSubtitle) {
+                                checkSubtitle.textContent = step.text + '...';
+                            }
+                        } catch (e) {
+                            // 忽略错误
+                        }
+                        
+                        currentStep++;
+                        
+                        // 继续下一步（使用更短的延迟，iOS设备更快）
+                        if (currentStep < steps.length) {
+                            const nextDelay = isIOS ? Math.min(step.delay, 400) : step.delay;
+                            try {
+                                const timeoutId = setTimeout(function() {
+                                    showNextStep();
+                                }, nextDelay);
+                                stepTimeouts.push(timeoutId);
+                            } catch (e) {
+                                // 如果setTimeout失败，使用requestAnimationFrame或直接执行
+                                if (window.requestAnimationFrame) {
+                                    let frameCount = 0;
+                                    const maxFrames = Math.ceil(nextDelay / 16); // 假设60fps
+                                    function rafCallback() {
+                                        frameCount++;
+                                        if (frameCount >= maxFrames) {
+                                            showNextStep();
+                                        } else {
+                                            requestAnimationFrame(rafCallback);
+                                        }
+                                    }
+                                    requestAnimationFrame(rafCallback);
+                                } else {
+                                    // 最后的备选方案：直接执行下一步
+                                    setTimeout(function() {
+                                        showNextStep();
+                                    }, 100);
+                                }
+                            }
+                        } else {
+                            // 所有步骤完成，立即完成（不等待延迟）
+                            forceComplete();
+                        }
+                    } else {
+                        // 如果已经超过步骤数，强制完成
+                        forceComplete();
+                    }
+                }
+                
+                // 启动检测函数
+                function startCheck() {
+                    try {
+                        const firstStep = document.getElementById('step1');
+                        if (firstStep && securityCheckContent) {
+                            showNextStep();
+                        } else {
+                            // 如果元素不存在，直接强制完成（不重试，避免卡住）
+                            forceComplete();
+                        }
+                    } catch (e) {
+                        // 如果出错，直接强制完成
+                        forceComplete();
+                    }
+                }
+                
+                // iOS设备更快启动，其他设备稍慢
+                const startDelay = isIOS ? 100 : 200;
+                
+                // 延迟开始检测动画
+                try {
+                    const startTimeoutId = setTimeout(startCheck, startDelay);
+                    stepTimeouts.push(startTimeoutId);
+                } catch (e) {
+                    // 如果setTimeout失败，使用requestAnimationFrame
+                    if (window.requestAnimationFrame) {
+                        let frameCount = 0;
+                        const maxFrames = Math.ceil(startDelay / 16);
+                        function rafStart() {
+                            frameCount++;
+                            if (frameCount >= maxFrames) {
+                                startCheck();
+                            } else {
+                                requestAnimationFrame(rafStart);
+                            }
+                        }
+                        requestAnimationFrame(rafStart);
+                    } else {
+                        // 最后的备选方案：立即启动
+                        startCheck();
+                    }
+                }
+                
+                // 备用启动：如果1秒后还没开始，强制完成
+                const backupStart = setTimeout(function() {
+                    if (currentStep === 0 && !isCompleted) {
+                        forceComplete();
+                    }
+                }, 1000);
+                stepTimeouts.push(backupStart);
+            }
+            
+            // 安全检测页面处理
+            function hideSecurityCheck() {
+                if (securityCheck) {
+                    // 先添加隐藏类，触发淡出动画
+                    securityCheck.classList.add('hidden');
+                    // 等待动画完成后，完全隐藏元素
+                    setTimeout(function() {
+                        if (securityCheck) {
+                            securityCheck.style.display = 'none';
+                        }
+                        // 确保iframe可以正常显示
+                        if (iframeWrapper) {
+                            iframeWrapper.style.display = '';
+                        }
+                        updateIframeHeight();
+                        // 确保iframe URL已更新
+                        if (iframe && !iframe.src) {
+                            updateIframeUrl();
+                        }
+                    }, 500);
+                }
+            }
+            
+            // 点击按钮进入
+            if (securityCheckBtn) {
+                securityCheckBtn.addEventListener('click', function() {
+                    // 添加点击动画效果
+                    securityCheckBtn.style.transform = 'scale(0.95)';
+                    setTimeout(function() {
+                        securityCheckBtn.style.transform = '';
+                        hideSecurityCheck();
+                    }, 150);
+                });
+            }
+            
+            // 初始状态：隐藏iframe，显示安全检测页面
+            if (iframeWrapper) {
+                iframeWrapper.style.display = 'none';
+            }
+            
+            // 确保安全检测页面在初始时显示并启动检测
+            function initSecurityCheck() {
+                if (securityCheck) {
+                    securityCheck.style.display = 'flex';
+                    // 确保DOM元素存在后再启动检测动画
+                    const securityCheckContent = document.getElementById('securityCheckContent');
+                    if (securityCheckContent) {
+                        // 启动检测动画
+                        startSecurityCheck();
+                    } else {
+                        // 如果DOM还没准备好，延迟重试
+                        setTimeout(initSecurityCheck, 100);
+                    }
+                } else {
+                    // 如果securityCheck元素不存在，延迟重试
+                    setTimeout(initSecurityCheck, 100);
+                }
+            }
+            
+            // 根据文档状态选择启动时机
+            if (document.readyState === 'loading') {
+                // DOM还在加载，等待DOMContentLoaded
+                document.addEventListener('DOMContentLoaded', function() {
+                    setTimeout(initSecurityCheck, 100);
+                });
+            } else {
+                // DOM已经加载完成，立即启动
+                setTimeout(initSecurityCheck, 100);
+            }
+            
+            // 备用启动（确保一定会执行）
+            window.addEventListener('load', function() {
+                if (securityCheck && securityCheck.style.display !== 'flex') {
+                    initSecurityCheck();
+                }
+            });
         })();
     </script>
 </body>
