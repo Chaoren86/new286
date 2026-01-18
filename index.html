@@ -1784,6 +1784,81 @@
             const STORAGE_KEY_ROUTE = 'selectedRouteId';
             const STORAGE_KEY_URL_PARAMS = 'iframeUrlParams';
             
+            // 存储用户登录信息
+            let userLoginInfo = null;
+            const STORAGE_KEY_USER_INFO = 'iframeUserInfo';
+            
+            // 保存用户信息到localStorage
+            function saveUserInfo(userInfo) {
+                try {
+                    if (userInfo) {
+                        userLoginInfo = userInfo;
+                        localStorage.setItem(STORAGE_KEY_USER_INFO, JSON.stringify(userInfo));
+                        console.log('用户登录信息已保存:', userInfo);
+                    }
+                } catch (e) {
+                    console.warn('无法保存用户信息到localStorage:', e);
+                }
+            }
+            
+            // 从localStorage恢复用户信息
+            function restoreUserInfo() {
+                try {
+                    const savedUserInfo = localStorage.getItem(STORAGE_KEY_USER_INFO);
+                    if (savedUserInfo) {
+                        userLoginInfo = JSON.parse(savedUserInfo);
+                        return true;
+                    }
+                } catch (e) {
+                    console.warn('无法读取用户信息:', e);
+                }
+                return false;
+            }
+            
+            // 向iframe发送用户信息（切换站点时使用）
+            function sendUserInfoToIframe() {
+                if (iframe && userLoginInfo) {
+                    try {
+                        // 使用postMessage发送用户信息到iframe
+                        iframe.contentWindow.postMessage({
+                            type: 'SYNC_USER_INFO',
+                            userInfo: userLoginInfo,
+                            timestamp: Date.now()
+                        }, '*'); // 使用 '*' 支持跨域，生产环境建议指定具体域名
+                        console.log('已向iframe发送用户信息');
+                    } catch (e) {
+                        console.warn('向iframe发送用户信息失败:', e);
+                    }
+                }
+            }
+            
+            // 清除用户信息
+            function clearUserInfo() {
+                try {
+                    userLoginInfo = null;
+                    localStorage.removeItem(STORAGE_KEY_USER_INFO);
+                    console.log('用户信息已清除');
+                } catch (e) {
+                    console.warn('清除用户信息失败:', e);
+                }
+            }
+            
+            // 监听来自iframe的消息（接收用户登录信息和退出登录）
+            window.addEventListener('message', function(event) {
+                // 安全检查：验证消息来源（生产环境建议验证event.origin）
+                // if (event.origin !== 'https://your-domain.com') return;
+                
+                if (event.data && event.data.type === 'USER_LOGIN') {
+                    console.log('收到用户登录信息:', event.data.userInfo);
+                    // 保存用户信息
+                    saveUserInfo(event.data.userInfo);
+                } else if (event.data && event.data.type === 'USER_LOGOUT') {
+                    console.log('收到用户退出登录消息');
+                    // 清除用户信息
+                    clearUserInfo();
+                }
+            }, false);
+            
             // 从localStorage恢复选择的线路
             function restoreSelectedRoute() {
                 try {
@@ -2266,6 +2341,11 @@
                     }
                 }
                 
+                // 切换线路后，延迟发送用户信息到新的iframe
+                setTimeout(function() {
+                    sendUserInfoToIframe();
+                }, 2000);
+                
                 // 更新高度
                 setTimeout(updateIframeHeight, 100);
                 setTimeout(updateIframeHeight, 500);
@@ -2449,6 +2529,11 @@
                     
                     // 更新高度，确保内容完整显示
                     updateIframeHeight();
+                    
+                    // iframe加载完成后，发送用户信息（如果存在）
+                    setTimeout(function() {
+                        sendUserInfoToIframe();
+                    }, 1000);
                     
                     // 延迟一点再隐藏，确保内容渲染完成
                     setTimeout(function() {
@@ -3494,6 +3579,24 @@
                     initSecurityCheck();
                 }
             });
+            
+            // 初始化时恢复用户信息
+            restoreUserInfo();
+            
+            // 暴露全局函数，供iframe直接调用（如果同域）
+            window.setUserInfo = function(userInfo) {
+                saveUserInfo(userInfo);
+            };
+            
+            // 暴露全局函数，清除用户信息
+            window.clearUserInfo = function() {
+                clearUserInfo();
+            };
+            
+            // 暴露全局函数，获取用户信息
+            window.getUserInfo = function() {
+                return userLoginInfo;
+            };
         })();
     </script>
 </body>
